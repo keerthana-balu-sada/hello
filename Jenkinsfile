@@ -28,6 +28,7 @@ pipeline {
         stage('build') {
             steps {
                 sh "docker build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
+            }
         }
     }
 }
