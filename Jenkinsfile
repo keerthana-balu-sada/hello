@@ -25,5 +25,9 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
+        stage('build') {
+            steps {
+                sh "docker build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
+        }
     }
 }
