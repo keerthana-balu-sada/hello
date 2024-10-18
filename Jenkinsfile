@@ -3,10 +3,6 @@ pipeline {
     tools{
         maven 'maven-tool'
     }
-    environment {
-        // Define dockerImageTag based on IMAGE_NAME and BUILD_NUMBER
-        dockerImageTag = "${env.IMAGE_NAME}:${env.BUILD_NUMBER}"
-    }
     stages {
         stage('Build') {
             steps {
@@ -38,7 +34,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'jenkins-pat-keerthana', variable: 'PASSWORD')]) {
                     sh 'docker login -u keerthanabk -p $PASSWORD' 
-                    sh "docker push ${dockerImageTag}"
+                    sh "docker push ${env.IMAGE_NAME}:${env.BUILD_NUMBER}"
                     
                 }
             }
