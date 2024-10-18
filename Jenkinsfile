@@ -30,11 +30,14 @@ pipeline {
                 sh "docker build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
             }
         }
-        stage('push') {
-            steps {
-                sh "docker push keerthanabk/java-demo:latest"
+        stage('Push image to Docker') {
+            steps{
+                withCredentials([string(credentialsId: 'jenkins-pat-keerthana', variable: 'PASSWORD')]) {
+                    sh 'docker login -u keerthanabk -p $PASSWORD' 
+                    sh "docker push ${dockerImageTag}"
+                    
+                }
             }
-        }
       
     }
 }
