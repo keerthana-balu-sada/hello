@@ -3,6 +3,10 @@ pipeline {
     tools{
         maven 'maven-tool'
     }
+    environment {
+        // Define dockerImageTag based on IMAGE_NAME and BUILD_NUMBER
+        dockerImageTag = "${env.IMAGE_NAME}:${env.BUILD_NUMBER}"
+    }
     stages {
         stage('Build') {
             steps {
@@ -27,7 +31,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh "docker build -t ${dockerImageTag}"
+                sh "docker build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
             }
         }
         stage('Push image to Docker') {
@@ -39,5 +43,5 @@ pipeline {
                 }
             }
         }
-    }
+        
 }
