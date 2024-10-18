@@ -34,7 +34,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'jenkins-pat-keerthana', variable: 'PASSWORD')]) {
                     sh 'docker login -u keerthanabk -p $PASSWORD' 
-                    sh "docker push ${dockerImageTag}"
+                    sh "docker push ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
                     
                 }
             }
